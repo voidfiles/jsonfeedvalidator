@@ -11,7 +11,7 @@ packages = [
 ]
 
 requires = [
-    "iso8601",
+    "jsonschema",
 ]
 test_requirements = ['pytest>=2.8.0', "requests"]
 
