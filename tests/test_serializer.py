@@ -1,4 +1,7 @@
+import pytest
+
 from jsonfeedvalidator.validator import validate_feed
+from jsonschema import ValidationError
 
 GOOD_DATA = {
     "version": "https://jsonfeed.org/version/1",
@@ -40,48 +43,11 @@ BAD_DATA = {
     ]
 }
 
-BAD_OUTPUT = {
-    'feed': {
-        'errors': [
-            'feed must have version',
-            'feed must have a title'
-        ],
-        'suggestions': []
-    },
-    'items': {
-        0: {
-            'item': {
-                'errors': [
-                    'item must have an id',
-                    'item must have one or both of content_html or content_text'
-                ],
-                'suggestions': []
-            },
-            'attachments': {
-                0: {
-                    'attachment': {
-                        'errors': ['mime_type required for attachment'],
-                        'suggestions': []
-                    }
-                }
-            }
-        }
-    }
-}
-
-
-ERRORS = {
-    'items': [
-        {0: 'Item must have one or both of content_text or content_html'}
-    ],
-    'version': ['This field is required'],
-    'title': ['This field is required'],
-}
-
 
 def test_validate_good_feed():
-    assert validate_feed(GOOD_DATA) == {}
+    assert validate_feed(GOOD_DATA) is None
 
 
 def test_validate_bad_feed():
-    assert validate_feed(BAD_DATA) == BAD_OUTPUT
+    with pytest.raises(ValidationError):
+        validate_feed(BAD_DATA)

@@ -5,4 +5,6 @@ resp = requests.get("https://daringfireball.net/feeds/json")
 
 errors = validate_feed(resp.json())
 
-print errors  # {}
+assert errors is None
+
+errors = validate_feed({})
