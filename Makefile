@@ -8,4 +8,4 @@ deploy:
 
 update_schema:
 	rm -fR jsonfeedvalidator/schema.py
-	python update_schema.py > jsonfeedvalidator/schema.py
+	python bin/update_schema.py > jsonfeedvalidator/schema.py
